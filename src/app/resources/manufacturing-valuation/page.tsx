@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import ValuationCalculator from "@/components/valuation-calculator";
+import dynamic from "next/dynamic";
 import { Breadcrumb } from "@/components/breadcrumb";
+// const Breadcrumb = dynamic(() => import("@/components/breadcrumb"), { ssr: false });
+
 
 export const metadata: Metadata = {
   title: "Manufacturing Business Valuation Calculator | Schapira CPA",
@@ -24,7 +27,7 @@ export default function ManufacturingValuationPage() {
           </p>
         </div>
 
-        <ValuationCalculator />
+        {/* <ValuationCalculator /> */}
 
         <div className="mt-12 p-6 bg-gray-50 rounded-lg border">
           <h2 className="text-xl font-semibold mb-4">About This Calculator</h2>

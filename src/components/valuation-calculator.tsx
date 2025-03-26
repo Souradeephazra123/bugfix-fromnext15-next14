@@ -46,8 +46,7 @@ import {
 import { SensitivityAnalysis } from "@/components/sensitivity-analysis";
 
 export default function ValuationCalculator() {
-
-  const {toast}=useToast();
+  const { toast } = useToast();
   // Financial inputs
   const [revenue, setRevenue] = useState(10000000);
   const [ebitda, setEbitda] = useState(1500000);
@@ -586,9 +585,9 @@ export default function ValuationCalculator() {
                     </DialogDescription>
                   </DialogHeader>
                   <ScrollArea className="h-[300px] rounded-md border p-4">
-                    {savedScenarios.length > 0 ? (
+                    {savedScenarios && savedScenarios?.length > 0 ? (
                       <div className="space-y-2">
-                        {savedScenarios.map((scenario) => (
+                        {savedScenarios?.map((scenario) => (
                           <div
                             key={scenario.id}
                             className="p-3 border rounded-md hover:bg-slate-50 cursor-pointer"
@@ -599,7 +598,7 @@ export default function ValuationCalculator() {
                               {new Date(scenario.date).toLocaleDateString()} •
                               Value:{" "}
                               {formatCurrency(
-                                scenario.results.valuationRange.mid,
+                                scenario.results.valuationRange.mid
                               )}
                             </div>
                           </div>
@@ -815,12 +814,18 @@ export default function ValuationCalculator() {
                   onChange={(e) => handleIndustryChange(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  {Object.entries(industryData).map(([key, data]) => (
-                    <option key={key} value={key}>
-                      {data.name} (Multiple Range: {data.range[0]}x -{" "}
-                      {data.range[1]}x)
+                  {industryData && typeof industryData === "object" ? (
+                    Object.entries(industryData)?.map(([key, data]) => (
+                      <option key={key} value={key}>
+                        {data.name} (Multiple Range: {data.range[0] ?? 0}x -{" "}
+                        {data.range[1] ?? 0}x)
+                      </option>
+                    ))
+                  ) : (
+                    <option value="" disabled>
+                      Loading industries...
                     </option>
-                  ))}
+                  )}
                 </select>
                 <p className="text-sm text-gray-500">
                   Select the industry segment that best matches your
@@ -1443,8 +1448,8 @@ export default function ValuationCalculator() {
 
         <CardFooter className="flex flex-col sm:flex-row justify-between border-t pt-6 gap-4">
           <div className="text-sm text-gray-600">
-            © 2025 Schapira CPA. This calculator provides an estimation only
-            and should not be considered a formal valuation.
+            © 2025 Schapira CPA. This calculator provides an estimation only and
+            should not be considered a formal valuation.
           </div>
           <Button
             variant="outline"
